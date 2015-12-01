@@ -71,7 +71,7 @@ function imgToStatus(imgSrc) {
   var map = {
     "imagens/bola_verde_P.png": 100,
     "imagens/bola_amarela_P.png": 101,
-    "imagens/bola_vermelha_P.png": 102
+    "imagens/bola_vermelho_P.png": 102
   };
   return map[imgSrc];
 }
@@ -92,7 +92,7 @@ function log(str) {
 
 
 var checkingInterval = process.argv[2]  || 1800000;
-log("check interval is " + (checkingInterval/1000) + " seconds / " + (checkingInterval/(10000*60)) + " minutes");
+log("check interval is " + (checkingInterval/1000) + " seconds / " + (checkingInterval/(1000*60)) + " minutes");
 
 checkEnviroments();
 setInterval(checkEnviroments, checkingInterval);
