@@ -1,0 +1,23 @@
+{
+  "name": "sefaz-monitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sefaz-monitor.js",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "node-notifier": "^4.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sefaz",
+    "disponibilidade",
+    "monitor",
+    "nodejs",
+    "notificação"
+  ],
+  "author": "Daniel Melo <danielmelogpi@gmail.com>",
+  "license": "MIT"
+}
