@@ -1,7 +1,8 @@
 var http = require('http'),
   cheerio = require('cheerio'),
   notifier = require("node-notifier"),
-  path = require('path');
+  path = require('path'),
+  fs = require('fs');
 
 var pureHtmlRequestcallback = function(response) {
   var str = '';
@@ -17,7 +18,9 @@ function processPage(content) {
   var ufs = extractUfStates(content);
   var ufsWarn = filterForCodes(ufs, [101,102]);
   if (ufsWarn.length) {
-
+    ufsWarn.forEach(function (el) {
+      gravarUf(el);
+    });
     var ufsWarnNames = ufsWarn.map(function(curr) {
       return curr.Autorizador;
     });
@@ -40,7 +43,9 @@ function extractUfStates(content) {
   var ufs = [];
   resp('.tabelaListagemDados tr').each(function(i, line) {
     if (i === 0) return; //ignorar linha de titulo
-    var ufData = {};
+    var ufData = {
+      timestamp: Date.now()
+    };
     cheerio.load(line)("td").each(function(i, cell) {
       var imgAtribs = cell.children[0].attribs;
       if (imgAtribs) {
@@ -53,6 +58,16 @@ function extractUfStates(content) {
   });
 
   return ufs;
+}
+
+
+function gravarUf(ufData) {
+  var dataAsStr = JSON.stringify(ufData) + "\n";
+  console.log(dataAsStr);
+  fs.appendFile('data/nfe-indisponibilidade.txt', dataAsStr, {encoding: "utf8"} , function (err) {
+    if (err) console.error("erro ao gravar dados");
+    console.info("historico persistido");
+  });
 }
 
 function filterForCodes(ufs, codes) {
